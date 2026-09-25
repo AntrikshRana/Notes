@@ -1,0 +1,836 @@
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{amssymb}
+
+\definecolor{darkblue}{RGB}{30,65,110}
+\definecolor{lightblue}{RGB}{235,243,252}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{darkgreen}{RGB}{35,105,70}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=darkblue,
+    urlcolor=darkblue
+}
+
+\titleformat{\section}
+    {\Large\bfseries\color{darkblue}}
+    {\thesection}{0.6em}{}
+
+\titleformat{\subsection}
+    {\large\bfseries\color{darkblue}}
+    {\thesubsection}{0.5em}{}
+
+\titleformat{\subsubsection}
+    {\normalsize\bfseries\color{darkgreen}}
+    {\thesubsubsection}{0.5em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Unit 1 -- Clean Coding}
+\rhead{Course Tracker}
+\cfoot{\thepage}
+
+\newtcolorbox{conceptbox}{
+    colback=lightblue,
+    colframe=darkblue,
+    boxrule=0.7pt,
+    arc=2mm,
+    left=2mm,right=2mm,top=1.5mm,bottom=1.5mm
+}
+
+\newtcolorbox{exambox}{
+    colback=lightgray,
+    colframe=black!40,
+    boxrule=0.5pt,
+    arc=2mm,
+    left=2mm,right=2mm,top=1.5mm,bottom=1.5mm
+}
+
+\newcommand{\checkitem}{$\square$}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\title{
+    \vspace{-1cm}
+    \textbf{Unit 1 -- Clean Coding}\\
+    \large Complete Topic \& Subtopic Tracker
+}
+\author{Course Notes}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{conceptbox}
+\textbf{Syllabus scope:} This document covers the ``Clean coding mindset'' portion of Unit 1:
+readable code, modular code, maintainable code, naming conventions, avoiding code smells,
+and scalable code structure.
+
+\vspace{2mm}
+
+\textbf{How to use this document:} Treat each subsection as an individual study item.
+Mark the checkbox only after you understand the topic and can explain it in your own words.
+\end{conceptbox}
+
+\tableofcontents
+\newpage
+
+% =========================================================
+\section{Clean Coding Mindset}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand what clean coding means
+    \item Understand why code quality matters
+    \item Understand readability
+    \item Understand modularity
+    \item Understand maintainability
+    \item Understand the relationship between readability, modularity, and maintainability
+\end{itemize}
+
+\subsection{What is Clean Code?}
+
+Clean code is code that is structured and written in a way that makes its purpose
+and behavior relatively easy for developers to understand and modify.
+
+The syllabus describes the clean coding mindset through these qualities:
+
+\begin{itemize}
+    \item Readable code
+    \item Modular code
+    \item Maintainable code
+    \item Clear naming
+    \item Avoidance of code smells
+    \item Scalable code structure
+\end{itemize}
+
+\subsection{Why Clean Coding Matters}
+
+Poorly structured code can become increasingly difficult to understand and modify
+as a project grows.
+
+Clean coding aims to make the codebase easier to:
+
+\begin{itemize}
+    \item Read
+    \item Understand
+    \item Debug
+    \item Modify
+    \item Extend
+    \item Maintain
+\end{itemize}
+
+\begin{exambox}
+\textbf{Exam focus:} Be able to explain why clean code is important rather than
+defining it only as ``good-looking code.''
+\end{exambox}
+
+\subsection{Clean Code vs Working Code}
+
+A program can produce the correct output while still having poor structure.
+
+\begin{center}
+\textbf{Correct behavior} $\neq$ \textbf{Good design}
+\end{center}
+
+For example, code may work but still contain:
+
+\begin{itemize}
+    \item unclear variable names,
+    \item duplicated logic,
+    \item very large functions,
+    \item tightly connected components,
+    \item difficult-to-change structure.
+\end{itemize}
+
+The clean coding mindset considers both correctness and the quality of the
+code structure.
+
+% =========================================================
+\section{Readable Code}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand readability
+    \item Use meaningful names
+    \item Keep logic understandable
+    \item Avoid unnecessary complexity
+    \item Use consistent formatting
+    \item Understand why readability helps maintenance
+\end{itemize}
+
+\subsection{Meaningful Names}
+
+Names should communicate what a variable, function, class, or object represents.
+
+Prefer:
+
+\begin{verbatim}
+studentCount
+calculateSalary()
+PaymentService
+\end{verbatim}
+
+over vague names such as:
+
+\begin{verbatim}
+x
+doStuff()
+PS
+\end{verbatim}
+
+A good name reduces the amount of explanation needed to understand the code.
+
+\subsection{Readable Functions}
+
+A function should be understandable without requiring the reader to mentally
+trace many unrelated operations.
+
+When a function becomes too large or performs unrelated tasks, consider
+splitting it into smaller functions with clear responsibilities.
+
+\subsection{Avoid Unnecessary Complexity}
+
+Code should solve the problem without introducing unnecessary layers or
+complicated logic.
+
+Questions to ask:
+
+\begin{itemize}
+    \item Can another programmer understand this quickly?
+    \item Is the logic more complicated than the requirement?
+    \item Are there unnecessary conditions or nested blocks?
+    \item Does the function contain unrelated responsibilities?
+\end{itemize}
+
+\subsection{Consistent Formatting}
+
+Consistent formatting makes code easier to scan.
+
+Examples include:
+
+\begin{itemize}
+    \item consistent indentation,
+    \item consistent naming style,
+    \item consistent placement of braces,
+    \item consistent spacing.
+\end{itemize}
+
+\begin{exambox}
+\textbf{Key idea:} Readability is primarily about making the intent and structure
+of the code easy for another developer to understand.
+\end{exambox}
+
+% =========================================================
+\section{Modular Code}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand modularity
+    \item Understand modules/components
+    \item Separate responsibilities
+    \item Understand interfaces between modules
+    \item Understand benefits of modular design
+\end{itemize}
+
+\subsection{What is Modularity?}
+
+Modularity means dividing a larger system into smaller components or modules,
+where each module has a clear purpose.
+
+Instead of:
+
+\begin{center}
+\textbf{One giant program}
+\end{center}
+
+use:
+
+\[
+\text{System}
+\rightarrow
+\begin{cases}
+\text{User Module}\\
+\text{Payment Module}\\
+\text{Notification Module}\\
+\text{Data Module}
+\end{cases}
+\]
+
+The exact modules depend on the requirements of the system.
+
+\subsection{Separation of Responsibilities}
+
+A module should focus on a clearly defined part of the system.
+
+For example, in a simple application:
+
+\begin{verbatim}
+PaymentService
+NotificationService
+UserService
+\end{verbatim}
+
+would have more clearly separated responsibilities than one class handling
+payment, email, users, and database operations simultaneously.
+
+\subsection{Benefits of Modularity}
+
+Modularity can make a system:
+
+\begin{itemize}
+    \item easier to understand,
+    \item easier to test,
+    \item easier to modify,
+    \item easier to debug,
+    \item easier to extend,
+    \item easier for multiple developers to work on.
+\end{itemize}
+
+\subsection{Module Boundaries}
+
+A good module should have a clear purpose and a clear way for other modules
+to interact with it.
+
+Think of a module as a component with:
+
+\[
+\boxed{\text{Input} \rightarrow \text{Module} \rightarrow \text{Output}}
+\]
+
+Other parts of the program should not need to understand every internal detail
+of that module.
+
+% =========================================================
+\section{Maintainable Code}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand maintainability
+    \item Understand why requirements change
+    \item Understand ease of modification
+    \item Understand duplication and maintenance cost
+    \item Understand how clean structure supports maintenance
+\end{itemize}
+
+\subsection{What is Maintainability?}
+
+Maintainability describes how easily software can be understood, corrected,
+modified, or extended after it has been written.
+
+A maintainable system makes future changes easier.
+
+\subsection{Why Maintainability Matters}
+
+Software rarely remains unchanged.
+
+Requirements may change because of:
+
+\begin{itemize}
+    \item new features,
+    \item changed business rules,
+    \item bug fixes,
+    \item new integrations,
+    \item changes in user requirements.
+\end{itemize}
+
+If the code is tightly coupled or poorly organized, a small change can require
+changes throughout the system.
+
+\subsection{Characteristics of Maintainable Code}
+
+Maintainable code generally has:
+
+\begin{itemize}
+    \item meaningful names,
+    \item clear responsibilities,
+    \item low unnecessary duplication,
+    \item understandable structure,
+    \item manageable modules,
+    \item predictable behavior.
+\end{itemize}
+
+\subsection{Changeability}
+
+A useful question when reviewing a design is:
+
+\begin{center}
+\textit{``If this requirement changes, how many unrelated parts of the code
+will I have to modify?''}
+\end{center}
+
+A design that localizes changes is generally easier to maintain.
+
+% =========================================================
+\section{Naming Conventions}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand naming conventions
+    \item Variable naming
+    \item Function/method naming
+    \item Class naming
+    \item Constant naming
+    \item Avoid vague names
+    \item Maintain naming consistency
+\end{itemize}
+
+\subsection{Variable Names}
+
+Variable names should communicate their purpose.
+
+Good examples:
+
+\begin{verbatim}
+totalAmount
+studentCount
+currentBalance
+\end{verbatim}
+
+Poor examples:
+
+\begin{verbatim}
+x
+a
+temp1
+data
+\end{verbatim}
+
+A generic name is not always wrong, but it should have a clear reason for
+being used.
+
+\subsection{Function Names}
+
+Function names should communicate an action or operation.
+
+Examples:
+
+\begin{verbatim}
+calculateTotal()
+findStudent()
+sendNotification()
+validatePayment()
+\end{verbatim}
+
+The name should help the reader understand what the function does.
+
+\subsection{Class Names}
+
+Class names generally represent an object, concept, or responsibility.
+
+Examples:
+
+\begin{verbatim}
+Student
+Payment
+Order
+PaymentService
+ParkingSpot
+\end{verbatim}
+
+\subsection{Constants}
+
+Constants should be distinguishable from ordinary variables according to the
+naming convention used by the language/project.
+
+For example:
+
+\begin{verbatim}
+MAX_RETRIES
+DEFAULT_TIMEOUT
+\end{verbatim}
+
+\subsection{Consistency}
+
+A project should use a consistent naming style.
+
+For example, do not mix:
+
+\begin{verbatim}
+student_name
+studentName
+StudentName
+\end{verbatim}
+
+without a reason.
+
+\begin{exambox}
+\textbf{Exam focus:} Naming conventions are not merely cosmetic. Clear names
+reduce ambiguity and make code easier to understand and maintain.
+\end{exambox}
+
+% =========================================================
+\section{Avoiding Code Smells}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand what a code smell is
+    \item Recognize long methods
+    \item Recognize large/god classes
+    \item Recognize duplicated code
+    \item Recognize long parameter lists
+    \item Recognize deep nesting
+    \item Recognize magic numbers
+    \item Understand refactoring as a response
+\end{itemize}
+
+\subsection{What is a Code Smell?}
+
+A code smell is a sign or symptom in code that may indicate a deeper design
+or maintainability problem.
+
+A smell is not necessarily a bug.
+
+\begin{center}
+\textbf{Code smell} $\neq$ \textbf{runtime error}
+\end{center}
+
+A program can work correctly and still contain code smells.
+
+\subsection{Long Method}
+
+A method becomes difficult to understand because it contains too much logic.
+
+Possible response:
+
+\begin{itemize}
+    \item identify separate responsibilities,
+    \item extract smaller methods,
+    \item give each method a clear purpose.
+\end{itemize}
+
+\subsection{Large or God Class}
+
+A class becomes responsible for too many unrelated parts of the system.
+
+Example:
+
+\begin{verbatim}
+ApplicationManager
+ - users
+ - payments
+ - emails
+ - reports
+ - database
+ - authentication
+ - logging
+\end{verbatim}
+
+A possible refactoring is to divide these responsibilities into focused
+classes/modules.
+
+\subsection{Duplicated Code}
+
+The same or very similar logic appears in multiple places.
+
+Problem:
+
+\[
+\text{Change required}
+\rightarrow
+\text{many copies must be updated}
+\]
+
+This increases maintenance effort and can lead to inconsistent behavior.
+
+\subsection{Long Parameter List}
+
+A function requiring many parameters can become difficult to understand and
+call correctly.
+
+For example:
+
+\begin{verbatim}
+createUser(name, age, city, country, phone, email, ...)
+\end{verbatim}
+
+A possible design improvement is to group related information into an
+appropriate object when that makes sense.
+
+\subsection{Deep Nesting}
+
+Many nested conditions or loops can make control flow difficult to follow.
+
+Example structure:
+
+\begin{verbatim}
+if
+  if
+    for
+      if
+        ...
+\end{verbatim}
+
+Possible improvements include simplifying conditions, extracting functions,
+or using guard clauses where appropriate.
+
+\subsection{Magic Numbers}
+
+A literal number appears in code without explaining its meaning.
+
+Example:
+
+\begin{verbatim}
+if (age > 18)
+\end{verbatim}
+
+Depending on the context, a named constant can communicate intent more clearly:
+
+\begin{verbatim}
+MINIMUM_ADULT_AGE
+\end{verbatim}
+
+\subsection{Refactoring}
+
+Refactoring means improving the internal structure of code without changing
+its intended external behavior.
+
+Typical goals:
+
+\begin{itemize}
+    \item remove duplication,
+    \item simplify complex code,
+    \item improve names,
+    \item separate responsibilities,
+    \item improve modularity.
+\end{itemize}
+
+\begin{exambox}
+\textbf{Important distinction:}\\
+Fixing a bug changes incorrect behavior.\\
+Refactoring changes the internal structure while preserving intended behavior.
+\end{exambox}
+
+% =========================================================
+\section{Scalable Code Structure}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand scalable structure
+    \item Understand separation of responsibilities
+    \item Understand loose coupling
+    \item Understand cohesive modules
+    \item Understand extensibility
+    \item Understand why structure matters as projects grow
+\end{itemize}
+
+\subsection{What Does Scalable Code Structure Mean?}
+
+In the context of the syllabus, scalable code structure means organizing code
+so that the system can grow in functionality and complexity without becoming
+unreasonably difficult to understand or modify.
+
+\subsection{Separation of Responsibilities}
+
+Separate different responsibilities instead of placing all functionality into
+one component.
+
+For example:
+
+\[
+\text{Application}
+\rightarrow
+\begin{cases}
+\text{User Management}\\
+\text{Payment}\\
+\text{Notification}\\
+\text{Storage}
+\end{cases}
+\]
+
+Each component can then evolve more independently.
+
+\subsection{Cohesion}
+
+Cohesion describes how closely related the responsibilities inside a module
+are.
+
+A highly cohesive module focuses on one related area.
+
+\begin{center}
+\textbf{High cohesion} $\rightarrow$ related responsibilities stay together.
+\end{center}
+
+\subsection{Coupling}
+
+Coupling describes the degree of dependency between modules.
+
+A design with unnecessary strong dependencies can become difficult to change.
+
+\begin{center}
+\textbf{Good general goal: High cohesion + controlled/low coupling}
+\end{center}
+
+\subsection{Extensibility}
+
+A scalable structure should make it possible to add functionality without
+rewriting unrelated parts of the system.
+
+For example, if a payment system supports multiple payment methods, the design
+should ideally allow a new method to be introduced without modifying every
+existing payment-related component.
+
+This idea connects directly to the SOLID principles in Unit 2, especially
+the Open/Closed Principle.
+
+% =========================================================
+\section{Clean Coding -- Connections Between Topics}
+
+The topics in this section should not be memorized independently.
+
+\subsection{How the Concepts Connect}
+
+\[
+\boxed{
+\text{Good Names}
++
+\text{Readable Functions}
++
+\text{Modular Design}
++
+\text{Clear Responsibilities}
+}
+\]
+
+\[
+\Downarrow
+\]
+
+\[
+\boxed{\text{More Maintainable Code}}
+\]
+
+Code smells often indicate that one or more of these qualities is missing.
+
+For example:
+
+\[
+\text{God Class}
+\rightarrow
+\text{poor separation of responsibilities}
+\rightarrow
+\text{low cohesion}
+\rightarrow
+\text{harder maintenance}
+\]
+
+\subsection{Clean Coding and OOP}
+
+Clean coding provides the mindset for writing understandable code.
+
+OOP then provides concepts such as:
+
+\begin{itemize}
+    \item encapsulation,
+    \item abstraction,
+    \item inheritance,
+    \item composition,
+    \item polymorphism.
+\end{itemize}
+
+These concepts can be used to build modular and maintainable systems.
+
+\subsection{Clean Coding and SOLID}
+
+Unit 1 prepares the foundation for Unit 2.
+
+For example:
+
+\begin{verbatim}
+Large class
+    |
+    +--> too many responsibilities
+    |
+    +--> SRP violation
+\end{verbatim}
+
+Similarly:
+
+\begin{verbatim}
+Hard-coded concrete dependency
+    |
+    +--> difficult to replace/test
+    |
+    +--> DIP becomes relevant
+\end{verbatim}
+
+Thus, SOLID can be viewed as a more formal set of design principles that helps
+address common maintainability and design problems.
+
+% =========================================================
+\section{Quick Revision Sheet}
+
+\subsection{Definitions to Know}
+
+\begin{itemize}
+    \item \textbf{Clean Code:} Code designed to be understandable, maintainable,
+    and well structured.
+    \item \textbf{Readable Code:} Code whose intent and structure are easy to understand.
+    \item \textbf{Modularity:} Dividing a system into focused components/modules.
+    \item \textbf{Maintainability:} Ease with which software can be understood,
+    corrected, modified, or extended.
+    \item \textbf{Code Smell:} A symptom suggesting a possible design or
+    maintainability problem.
+    \item \textbf{Refactoring:} Improving internal code structure while preserving
+    intended behavior.
+    \item \textbf{Cohesion:} How closely related the responsibilities within a
+    module are.
+    \item \textbf{Coupling:} The degree of dependency between modules.
+\end{itemize}
+
+\subsection{Final Checklist}
+
+\begin{itemize}[label=\checkitem]
+    \item I can explain the clean coding mindset.
+    \item I can explain readable code.
+    \item I can identify poor naming.
+    \item I can explain modular code.
+    \item I can explain maintainability.
+    \item I can identify common code smells.
+    \item I can explain refactoring.
+    \item I can explain scalable code structure.
+    \item I understand cohesion.
+    \item I understand coupling.
+    \item I can explain how these concepts connect to SOLID.
+\end{itemize}
+
+\begin{conceptbox}
+\textbf{One-line mental model:}
+
+\[
+\boxed{
+\text{Clear names}
+\rightarrow
+\text{clear responsibilities}
+\rightarrow
+\text{modular structure}
+\rightarrow
+\text{maintainable code}
+}
+\]
+
+When you encounter a piece of code, ask:
+\textit{``Can another developer understand this, change it, and extend it
+without having to understand the entire system?''}
+\end{conceptbox}
+
+\end{document}

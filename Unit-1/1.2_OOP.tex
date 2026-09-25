@@ -1,0 +1,755 @@
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{amssymb}
+
+\definecolor{darkblue}{RGB}{30,65,110}
+\definecolor{lightblue}{RGB}{235,243,252}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{darkgreen}{RGB}{35,105,70}
+
+\hypersetup{colorlinks=true,linkcolor=darkblue,urlcolor=darkblue}
+
+\titleformat{\section}{\Large\bfseries\color{darkblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{darkblue}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{darkgreen}}{\thesubsubsection}{0.5em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Unit 1 -- Object-Oriented Thinking}
+\rhead{Course Tracker}
+\cfoot{\thepage}
+
+\newtcolorbox{conceptbox}{
+    colback=lightblue,colframe=darkblue,boxrule=0.7pt,arc=2mm,
+    left=2mm,right=2mm,top=1.5mm,bottom=1.5mm
+}
+\newtcolorbox{exambox}{
+    colback=lightgray,colframe=black!40,boxrule=0.5pt,arc=2mm,
+    left=2mm,right=2mm,top=1.5mm,bottom=1.5mm
+}
+
+\newcommand{\checkitem}{$\square$}
+
+\title{\vspace{-1cm}\textbf{Unit 1 -- Object-Oriented Thinking}\\
+\large Complete Topic \& Subtopic Tracker}
+\author{Course Notes}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{conceptbox}
+\textbf{Syllabus scope:} This document covers the Object-Oriented Thinking
+portion of Unit 1: encapsulation, abstraction, inheritance vs composition,
+and polymorphism.
+\end{conceptbox}
+
+\tableofcontents
+\newpage
+
+% =========================================================
+\section{Object-Oriented Thinking}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand the object-oriented way of modeling a problem
+    \item Identify objects and their responsibilities
+    \item Understand state and behavior
+    \item Understand classes and objects
+    \item Understand encapsulation
+    \item Understand abstraction
+    \item Understand inheritance
+    \item Compare inheritance and composition
+    \item Understand polymorphism
+\end{itemize}
+
+\subsection{What is Object-Oriented Thinking?}
+
+Object-oriented thinking models a system using objects that represent
+entities or concepts in the problem domain.
+
+An object generally combines:
+
+\begin{itemize}
+    \item \textbf{State} -- the data the object contains.
+    \item \textbf{Behavior} -- the operations the object can perform.
+\end{itemize}
+
+For example, a \texttt{BankAccount} could have:
+
+\begin{verbatim}
+State:
+    accountNumber
+    balance
+
+Behavior:
+    deposit()
+    withdraw()
+    getBalance()
+\end{verbatim}
+
+The goal is to decide which objects should exist and which responsibilities
+belong to each object.
+
+\subsection{Class vs Object}
+
+A \textbf{class} describes the structure and behavior of a type.
+
+An \textbf{object} is an instance of that class.
+
+Conceptually:
+
+\[
+\text{Class} \rightarrow \text{Object}
+\]
+
+For example:
+
+\begin{verbatim}
+Class:   Car
+Objects: car1, car2, car3
+\end{verbatim}
+
+A class defines what an object can contain and do; an object represents a
+particular instance.
+
+% =========================================================
+\section{Encapsulation}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Define encapsulation
+    \item Understand data hiding
+    \item Understand access control
+    \item Understand public/private/protected access
+    \item Understand why behavior should control state changes
+    \item Identify examples of encapsulation
+\end{itemize}
+
+\subsection{Definition}
+
+Encapsulation means bundling an object's data and the operations that work
+with that data together while controlling access to the internal state.
+
+A simple conceptual model is:
+
+\[
+\boxed{\text{Object} = \text{State} + \text{Behavior}}
+\]
+
+with controlled access to the state.
+
+\subsection{Data Hiding}
+
+An object's internal data does not always need to be directly accessible.
+
+For example, instead of allowing arbitrary changes to a bank balance, the
+class can expose operations such as:
+
+\begin{verbatim}
+deposit()
+withdraw()
+getBalance()
+\end{verbatim}
+
+These operations can enforce rules.
+
+\subsection{Access Control}
+
+Typical object-oriented access levels include:
+
+\begin{itemize}
+    \item \textbf{Public}: accessible through the public interface.
+    \item \textbf{Private}: accessible only within the class.
+    \item \textbf{Protected}: accessible within the class and appropriate
+    derived classes, depending on the language.
+\end{itemize}
+
+The exact syntax depends on the programming language.
+
+\subsection{Why Encapsulation Matters}
+
+Encapsulation can:
+
+\begin{itemize}
+    \item protect internal state,
+    \item prevent invalid direct modifications,
+    \item localize implementation details,
+    \item provide a controlled interface,
+    \item make future implementation changes easier.
+\end{itemize}
+
+\begin{exambox}
+\textbf{Exam definition:} Encapsulation is the bundling of data and related
+behavior together while controlling access to the object's internal state.
+\end{exambox}
+
+% =========================================================
+\section{Abstraction}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Define abstraction
+    \item Understand essential vs non-essential details
+    \item Understand interfaces
+    \item Understand abstract classes/interfaces conceptually
+    \item Distinguish abstraction from implementation
+    \item Compare abstraction with encapsulation
+\end{itemize}
+
+\subsection{Definition}
+
+Abstraction means exposing the essential operations or concepts of an object
+while hiding unnecessary implementation details.
+
+The user of an abstraction focuses on:
+
+\[
+\boxed{\text{What can this object do?}}
+\]
+
+rather than:
+
+\[
+\boxed{\text{How is every internal step implemented?}}
+\]
+
+\subsection{Example}
+
+A payment interface might expose:
+
+\begin{verbatim}
+pay(amount)
+\end{verbatim}
+
+The caller does not necessarily need to know whether the implementation uses
+a particular banking API, database operation, or network protocol.
+
+\subsection{Interface as an Abstraction}
+
+An interface defines a contract that an implementation must satisfy.
+
+Conceptually:
+
+\begin{verbatim}
+Payment
+    |
+    +-- CardPayment
+    +-- UPIPayment
+    +-- CashPayment
+\end{verbatim}
+
+The caller can depend on the common payment abstraction rather than every
+concrete implementation.
+
+\subsection{Abstraction vs Encapsulation}
+
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|X|}
+\hline
+\textbf{Abstraction} & Focuses on exposing essential behavior and hiding unnecessary implementation details.\\
+\hline
+\textbf{Encapsulation} & Focuses on bundling state and behavior and controlling access to internal state.\\
+\hline
+\end{tabularx}
+
+\begin{exambox}
+\textbf{Easy memory aid:}\\
+Abstraction asks: \textit{``What should the outside world see?''}\\
+Encapsulation asks: \textit{``How do I protect and control the inside?''}
+\end{exambox}
+
+% =========================================================
+\section{Inheritance}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Define inheritance
+    \item Understand base and derived classes
+    \item Understand reuse through inheritance
+    \item Understand method overriding conceptually
+    \item Understand ``is-a'' relationships
+    \item Understand appropriate and inappropriate inheritance
+\end{itemize}
+
+\subsection{Definition}
+
+Inheritance allows one class to derive from another class.
+
+Conceptually:
+
+\[
+\text{Base Class} \rightarrow \text{Derived Class}
+\]
+
+For example:
+
+\[
+Vehicle
+\rightarrow
+\begin{cases}
+Car\\
+Bike
+\end{cases}
+\]
+
+The derived class can inherit appropriate state and behavior and can add or
+specialize behavior.
+
+\subsection{Is-A Relationship}
+
+Inheritance should normally represent a meaningful ``is-a'' relationship.
+
+Examples:
+
+\[
+Car \text{ is a } Vehicle
+\]
+
+\[
+Dog \text{ is an } Animal
+\]
+
+A class hierarchy should preserve the meaning and expectations of the
+base abstraction.
+
+\subsection{Method Overriding}
+
+A derived class may provide a specialized implementation of a behavior
+defined by the base class.
+
+Conceptually:
+
+\begin{verbatim}
+Animal
+    makeSound()
+
+Dog
+    makeSound()  --> dog-specific behavior
+
+Cat
+    makeSound()  --> cat-specific behavior
+\end{verbatim}
+
+This becomes important when understanding runtime polymorphism.
+
+\subsection{Advantages of Inheritance}
+
+Potential benefits:
+
+\begin{itemize}
+    \item reuse of common behavior,
+    \item representation of genuine type hierarchies,
+    \item support for polymorphism,
+    \item specialization of common abstractions.
+\end{itemize}
+
+\subsection{Risks of Inheritance}
+
+Inheritance can create strong coupling between parent and child classes.
+
+Problems can occur when:
+
+\begin{itemize}
+    \item the ``is-a'' relationship is artificial,
+    \item the hierarchy becomes too deep,
+    \item subclasses depend heavily on parent implementation,
+    \item inherited behavior does not make sense for the subclass.
+\end{itemize}
+
+This connects directly to the Liskov Substitution Principle in Unit 2.
+
+% =========================================================
+\section{Inheritance vs Composition}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Define inheritance-based design
+    \item Define composition-based design
+    \item Understand ``is-a'' vs ``has-a''
+    \item Compare flexibility
+    \item Identify when composition is preferable
+    \item Understand how this connects to design patterns and SOLID
+\end{itemize}
+
+\subsection{Inheritance: ``Is-A''}
+
+Inheritance models a type hierarchy.
+
+\[
+Car \text{ is a } Vehicle
+\]
+
+The child derives from the parent.
+
+\subsection{Composition: ``Has-A''}
+
+Composition builds an object using other objects.
+
+\[
+Car \text{ has an } Engine
+\]
+
+Conceptually:
+
+\begin{verbatim}
+Car
+ |
+ +-- Engine
+\end{verbatim}
+
+The Car does not need to become a subclass of Engine.
+
+\subsection{Comparison}
+
+\begin{tabularx}{\textwidth}{|p{0.23\textwidth}|X|X|}
+\hline
+ & \textbf{Inheritance} & \textbf{Composition}\\
+\hline
+Relationship & is-a & has-a\\
+\hline
+Structure & parent-child hierarchy & object contains/uses another object\\
+\hline
+Coupling & often stronger & often more flexible\\
+\hline
+Reuse & through inherited behavior & through contained components\\
+\hline
+Typical example & Car is a Vehicle & Car has an Engine\\
+\hline
+\end{tabularx}
+
+\subsection{Why Composition is Often Preferred}
+
+Composition can allow a component to be replaced or changed independently.
+
+For example, instead of creating many subclasses for different behaviors:
+
+\begin{verbatim}
+CarWithX
+CarWithY
+CarWithZ
+\end{verbatim}
+
+a design can sometimes use interchangeable components:
+
+\begin{verbatim}
+Car
+ |
+ +-- Engine
+ +-- PaymentStrategy
+ +-- NavigationSystem
+\end{verbatim}
+
+This can reduce the size of inheritance hierarchies.
+
+\begin{exambox}
+\textbf{Exam question: Why prefer composition over inheritance?}\\
+A common answer is that composition can provide greater flexibility and
+lower coupling because behavior can be assembled from independent objects
+instead of being permanently tied to an inheritance hierarchy.
+\end{exambox}
+
+% =========================================================
+\section{Polymorphism}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Define polymorphism
+    \item Understand the common interface idea
+    \item Understand method overriding
+    \item Understand runtime polymorphism
+    \item Understand compile-time polymorphism
+    \item Connect polymorphism with abstraction and inheritance
+\end{itemize}
+
+\subsection{Definition}
+
+Polymorphism means that the same interface or operation can represent
+different behavior depending on the object involved.
+
+The central idea is:
+
+\[
+\boxed{\text{One interface} \rightarrow \text{multiple implementations}}
+\]
+
+\subsection{Runtime Polymorphism}
+
+Runtime polymorphism occurs when the implementation selected depends on the
+actual object at runtime.
+
+Conceptually:
+
+\begin{verbatim}
+Animal* animal = Dog;
+animal->makeSound();
+\end{verbatim}
+
+The common interface is \texttt{Animal}, while the actual implementation
+can be supplied by \texttt{Dog}.
+
+Another object could be:
+
+\begin{verbatim}
+Animal* animal = Cat;
+animal->makeSound();
+\end{verbatim}
+
+The same operation can therefore produce different behavior.
+
+\subsection{Compile-Time Polymorphism}
+
+Depending on the language, compile-time polymorphism can include mechanisms
+such as function overloading or operator overloading.
+
+Example concept:
+
+\begin{verbatim}
+add(int, int)
+add(double, double)
+\end{verbatim}
+
+The operation has the same conceptual name but different parameter forms.
+
+\subsection{Polymorphism and Abstraction}
+
+Abstraction defines a common interface.
+
+Polymorphism allows different implementations to be used through that common
+interface.
+
+\[
+\text{Abstraction}
+\rightarrow
+\text{Common Interface}
+\rightarrow
+\text{Polymorphism}
+\rightarrow
+\text{Different Implementations}
+\]
+
+\subsection{Polymorphism and Inheritance}
+
+Inheritance is one common way to implement runtime polymorphism.
+
+However, the broader design idea is programming to a common abstraction and
+allowing different implementations to satisfy it.
+
+% =========================================================
+\section{Connections Between the OOP Concepts}
+
+\subsection{The Big Picture}
+
+The five topics in this section work together:
+
+\[
+\boxed{
+Encapsulation
++
+Abstraction
++
+Inheritance
++
+Composition
++
+Polymorphism
+}
+\]
+
+A typical design may use several simultaneously.
+
+For example, consider a payment system:
+
+\begin{verbatim}
+Payment
+   |
+   +-- CardPayment
+   +-- UPIPayment
+   +-- CashPayment
+\end{verbatim}
+
+The common \texttt{Payment} abstraction defines what payment implementations
+must provide.
+
+Encapsulation keeps implementation details inside each class.
+
+Polymorphism allows the application to call the common payment operation
+without knowing which concrete implementation is being used.
+
+Composition can be used to build the payment system from other components.
+
+% =========================================================
+\section{Important Comparisons}
+
+\subsection{Encapsulation vs Abstraction}
+
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|X|}
+\hline
+\textbf{Encapsulation} & Controls access to internal state and bundles state with related behavior.\\
+\hline
+\textbf{Abstraction} & Shows essential behavior while hiding unnecessary implementation details.\\
+\hline
+\end{tabularx}
+
+\subsection{Inheritance vs Composition}
+
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|X|}
+\hline
+\textbf{Inheritance} & Models an ``is-a'' relationship through a class hierarchy.\\
+\hline
+\textbf{Composition} & Models a ``has-a'' relationship by combining objects.\\
+\hline
+\end{tabularx}
+
+\subsection{Overloading vs Overriding}
+
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|X|}
+\hline
+\textbf{Overloading} & Multiple functions/methods with the same name but different parameter lists; commonly associated with compile-time polymorphism.\\
+\hline
+\textbf{Overriding} & A derived implementation replaces/specializes inherited behavior; commonly associated with runtime polymorphism.\\
+\hline
+\end{tabularx}
+
+% =========================================================
+\section{Exam-Oriented Questions}
+
+\begin{enumerate}
+    \item What is object-oriented thinking?
+    \item What is the difference between a class and an object?
+    \item Define encapsulation with an example.
+    \item What is data hiding?
+    \item Define abstraction.
+    \item Differentiate abstraction and encapsulation.
+    \item What is inheritance?
+    \item Explain the ``is-a'' relationship.
+    \item What is polymorphism?
+    \item Differentiate compile-time and runtime polymorphism.
+    \item What is method overriding?
+    \item What is composition?
+    \item Differentiate inheritance and composition.
+    \item Why can composition provide more flexibility than inheritance?
+    \item How are abstraction, inheritance, and polymorphism related?
+    \item Give a real-world example where inheritance is appropriate.
+    \item Give a real-world example where composition is appropriate.
+    \item Identify the OOP concepts present in a given class design.
+\end{enumerate}
+
+% =========================================================
+\section{Final Revision Checklist}
+
+\subsection*{Object-Oriented Thinking}
+
+\begin{itemize}[label=\checkitem]
+    \item I can explain object-oriented thinking.
+    \item I understand classes and objects.
+    \item I understand state and behavior.
+\end{itemize}
+
+\subsection*{Encapsulation}
+
+\begin{itemize}[label=\checkitem]
+    \item I can define encapsulation.
+    \item I understand data hiding.
+    \item I understand access control.
+    \item I can give a real-world example.
+\end{itemize}
+
+\subsection*{Abstraction}
+
+\begin{itemize}[label=\checkitem]
+    \item I can define abstraction.
+    \item I understand interfaces conceptually.
+    \item I can distinguish abstraction from encapsulation.
+\end{itemize}
+
+\subsection*{Inheritance}
+
+\begin{itemize}[label=\checkitem]
+    \item I can define inheritance.
+    \item I understand base and derived classes.
+    \item I understand the ``is-a'' relationship.
+    \item I understand method overriding.
+    \item I know the risks of inappropriate inheritance.
+\end{itemize}
+
+\subsection*{Composition}
+
+\begin{itemize}[label=\checkitem]
+    \item I can define composition.
+    \item I understand the ``has-a'' relationship.
+    \item I can compare composition with inheritance.
+    \item I understand why composition can improve flexibility.
+\end{itemize}
+
+\subsection*{Polymorphism}
+
+\begin{itemize}[label=\checkitem]
+    \item I can define polymorphism.
+    \item I understand runtime polymorphism.
+    \item I understand compile-time polymorphism.
+    \item I understand overriding vs overloading.
+    \item I can explain polymorphism using a real-world example.
+\end{itemize}
+
+\begin{conceptbox}
+\textbf{Final mental model:}
+
+\[
+\boxed{
+\text{Encapsulation}
+\rightarrow
+\text{protect the inside}
+}
+\]
+
+\[
+\boxed{
+\text{Abstraction}
+\rightarrow
+\text{show what matters}
+}
+\]
+
+\[
+\boxed{
+\text{Inheritance}
+\rightarrow
+\text{is-a relationship}
+}
+\]
+
+\[
+\boxed{
+\text{Composition}
+\rightarrow
+\text{has-a relationship}
+}
+\]
+
+\[
+\boxed{
+\text{Polymorphism}
+\rightarrow
+\text{one interface, different behavior}
+}
+\]
+\end{conceptbox}
+
+\end{document}

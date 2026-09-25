@@ -1,0 +1,814 @@
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{amssymb}
+
+\definecolor{darkblue}{RGB}{30,65,110}
+\definecolor{lightblue}{RGB}{235,243,252}
+\definecolor{lightgray}{RGB}{245,245,245}
+\definecolor{darkgreen}{RGB}{35,105,70}
+
+\hypersetup{colorlinks=true,linkcolor=darkblue,urlcolor=darkblue}
+
+\titleformat{\section}{\Large\bfseries\color{darkblue}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\large\bfseries\color{darkblue}}{\thesubsection}{0.5em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Unit 1 -- UML}
+\rhead{Course Tracker}
+\cfoot{\thepage}
+
+\newtcolorbox{conceptbox}{
+    colback=lightblue,colframe=darkblue,boxrule=0.7pt,arc=2mm,
+    left=2mm,right=2mm,top=1.5mm,bottom=1.5mm
+}
+\newtcolorbox{exambox}{
+    colback=lightgray,colframe=black!40,boxrule=0.5pt,arc=2mm,
+    left=2mm,right=2mm,top=1.5mm,bottom=1.5mm
+}
+
+\newcommand{\checkitem}{$\square$}
+
+\title{\vspace{-1cm}\textbf{Unit 1 -- UML}\\
+\large Complete Topic \& Subtopic Tracker}
+\author{Course Notes}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{conceptbox}
+\textbf{Syllabus scope:} UML, with emphasis on the two diagram types listed
+in the course syllabus: \textbf{Class Diagrams} and \textbf{Sequence Diagrams}.
+\end{conceptbox}
+
+\tableofcontents
+\newpage
+
+% =========================================================
+\section{UML Fundamentals}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Know what UML stands for
+    \item Understand why UML is used
+    \item Understand structural vs interaction modeling
+    \item Know the purpose of class diagrams
+    \item Know the purpose of sequence diagrams
+\end{itemize}
+
+\subsection{What is UML?}
+
+UML stands for \textbf{Unified Modeling Language}.
+
+It is a standardized visual language used to represent and communicate
+software designs.
+
+Instead of immediately writing implementation code, a designer can first
+represent the system visually.
+
+\subsection{Why Use UML?}
+
+UML can help developers:
+
+\begin{itemize}
+    \item understand a system before implementation,
+    \item communicate designs,
+    \item identify relationships between components,
+    \item visualize object interactions,
+    \item document a design.
+\end{itemize}
+
+\begin{conceptbox}
+\textbf{Mental model:}
+
+Class Diagram = \textbf{What the system is made of}
+
+Sequence Diagram = \textbf{How the objects interact}
+\end{conceptbox}
+
+% =========================================================
+\section{Class Diagrams}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand the purpose of a class diagram
+    \item Identify classes
+    \item Identify attributes
+    \item Identify methods/operations
+    \item Understand visibility
+    \item Understand relationships
+    \item Understand multiplicity
+    \item Read a complete class diagram
+    \item Create a basic class diagram from requirements
+\end{itemize}
+
+\subsection{Purpose of a Class Diagram}
+
+A class diagram represents the static structure of a system.
+
+It can show:
+
+\begin{itemize}
+    \item classes,
+    \item attributes,
+    \item operations/methods,
+    \item relationships,
+    \item visibility,
+    \item multiplicity.
+\end{itemize}
+
+\subsection{Basic Class Structure}
+
+A UML class is commonly represented using three sections:
+
+\begin{verbatim}
++-------------------------+
+|        Student          |
++-------------------------+
+| - name : String         |
+| - rollNo : int          |
++-------------------------+
+| + register() : void     |
+| + getName() : String    |
++-------------------------+
+\end{verbatim}
+
+The three sections represent:
+
+\begin{enumerate}
+    \item Class name
+    \item Attributes
+    \item Operations/methods
+\end{enumerate}
+
+\subsection{Class Name}
+
+The top section contains the class name.
+
+Examples:
+
+\begin{verbatim}
+Student
+Car
+Payment
+ParkingSpot
+BankAccount
+\end{verbatim}
+
+\subsection{Attributes}
+
+Attributes represent the data/state associated with the class.
+
+Example:
+
+\begin{verbatim}
+- name : String
+- balance : double
+- accountNumber : int
+\end{verbatim}
+
+A typical UML attribute can be represented as:
+
+\[
+\text{visibility name : type}
+\]
+
+\subsection{Methods / Operations}
+
+Operations represent behavior provided by the class.
+
+Example:
+
+\begin{verbatim}
++ deposit(amount : double) : void
++ withdraw(amount : double) : bool
++ getBalance() : double
+\end{verbatim}
+
+A typical UML operation can be represented as:
+
+\[
+\text{visibility method(parameters) : returnType}
+\]
+
+% =========================================================
+\section{Visibility in Class Diagrams}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Public visibility
+    \item Private visibility
+    \item Protected visibility
+    \item Understand visibility symbols
+    \item Interpret visibility in a diagram
+\end{itemize}
+
+\subsection{Common Visibility Symbols}
+
+\begin{tabularx}{\textwidth}{|p{0.2\textwidth}|p{0.2\textwidth}|X|}
+\hline
+\textbf{Symbol} & \textbf{Visibility} & \textbf{Meaning}\\
+\hline
++ & Public & Accessible through the public interface.\\
+\hline
+- & Private & Accessible only within the class.\\
+\hline
+\# & Protected & Accessible within the class and appropriate derived classes.\\
+\hline
+\end{tabularx}
+
+Example:
+
+\begin{verbatim}
++ deposit()
+- balance
+# validateTransaction()
+\end{verbatim}
+
+% =========================================================
+\section{Relationships Between Classes}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Association
+    \item Aggregation
+    \item Composition
+    \item Generalization / inheritance
+    \item Understand relationship direction
+    \item Understand multiplicity
+\end{itemize}
+
+\subsection{Association}
+
+Association represents a relationship between classes.
+
+Example:
+
+\[
+Customer \longrightarrow Order
+\]
+
+A customer can be associated with orders.
+
+The relationship can be named to clarify its meaning.
+
+\subsection{Aggregation}
+
+Aggregation represents a whole-part relationship where the parts can exist
+independently of the whole.
+
+Conceptually:
+
+\[
+Department \longrightarrow Employee
+\]
+
+An employee can exist even if a particular department object is removed.
+
+Aggregation is commonly represented with an \textbf{empty diamond} at the
+whole side.
+
+\subsection{Composition}
+
+Composition represents a stronger whole-part relationship.
+
+The part is strongly owned by the whole.
+
+Example:
+
+\[
+House \longrightarrow Room
+\]
+
+In a conceptual composition relationship, the lifecycle of the part is
+strongly tied to the whole.
+
+Composition is commonly represented with a \textbf{filled diamond} at the
+whole side.
+
+\subsection{Aggregation vs Composition}
+
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|X|X|}
+\hline
+ & \textbf{Aggregation} & \textbf{Composition}\\
+\hline
+Relationship & Whole-part & Strong whole-part\\
+\hline
+Ownership & Weaker & Stronger\\
+\hline
+Part lifetime & Can exist independently & Strongly tied to whole\\
+\hline
+UML notation & Empty diamond & Filled diamond\\
+\hline
+\end{tabularx}
+
+\subsection{Generalization / Inheritance}
+
+Generalization represents an inheritance relationship.
+
+Example:
+
+\[
+Vehicle
+\rightarrow
+\begin{cases}
+Car\\
+Bike
+\end{cases}
+\]
+
+It represents an ``is-a'' relationship.
+
+\begin{exambox}
+\textbf{Important:} Do not confuse inheritance with composition.\\
+Inheritance = ``is-a''.\\
+Composition = ``has-a'' / strong whole-part relationship.
+\end{exambox}
+
+% =========================================================
+\section{Multiplicity}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand multiplicity
+    \item Know 1
+    \item Know 0..1
+    \item Know *
+    \item Know 1..*
+    \item Interpret one-to-one relationships
+    \item Interpret one-to-many relationships
+    \item Interpret many-to-many relationships
+\end{itemize}
+
+\subsection{What is Multiplicity?}
+
+Multiplicity describes how many instances of one class can participate in a
+relationship with another class.
+
+Common notation:
+
+\begin{tabularx}{\textwidth}{|p{0.2\textwidth}|X|}
+\hline
+\textbf{Notation} & \textbf{Meaning}\\
+\hline
+1 & Exactly one\\
+\hline
+0..1 & Zero or one\\
+\hline
+* & Zero or more / many\\
+\hline
+1..* & One or more\\
+\hline
+\end{tabularx}
+
+\subsection{One-to-One}
+
+\[
+Person \quad 1 \longleftrightarrow 1 \quad Passport
+\]
+
+One person is associated with one passport in the modeled system.
+
+\subsection{One-to-Many}
+
+\[
+Customer \quad 1 \longrightarrow * \quad Order
+\]
+
+One customer can have many orders.
+
+\subsection{Many-to-Many}
+
+\[
+Student \quad * \longleftrightarrow * \quad Course
+\]
+
+Many students can enroll in many courses.
+
+\begin{exambox}
+When reading multiplicity, always ask:
+\textit{``How many objects on this side can be associated with one object on
+the other side?''}
+\end{exambox}
+
+% =========================================================
+\section{Creating a Class Diagram from Requirements}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Extract nouns from requirements
+    \item Identify candidate classes
+    \item Identify attributes
+    \item Identify behaviors
+    \item Identify relationships
+    \item Determine multiplicity
+    \item Determine appropriate relationship type
+    \item Review responsibilities
+\end{itemize}
+
+\subsection{Step 1: Identify Candidate Classes}
+
+Suppose the requirement says:
+
+\begin{quote}
+A customer can book multiple movie tickets for a show.
+\end{quote}
+
+Candidate classes include:
+
+\begin{verbatim}
+Customer
+Movie
+Show
+Ticket
+\end{verbatim}
+
+\subsection{Step 2: Identify Attributes}
+
+For example:
+
+\begin{verbatim}
+Customer
+- customerId
+- name
+
+Movie
+- movieId
+- title
+\end{verbatim}
+
+\subsection{Step 3: Identify Behavior}
+
+Possible methods:
+
+\begin{verbatim}
+Customer
++ bookTicket()
+
+Show
++ checkAvailability()
+
+Ticket
++ cancel()
+\end{verbatim}
+
+\subsection{Step 4: Identify Relationships}
+
+For example:
+
+\[
+Customer \longrightarrow Booking
+\]
+
+\[
+Show \longrightarrow Booking
+\]
+
+\subsection{Step 5: Determine Multiplicity}
+
+Ask:
+
+\begin{center}
+How many bookings can one customer make?
+\end{center}
+
+and:
+
+\begin{center}
+How many customers can be associated with one booking?
+\end{center}
+
+Then represent the appropriate multiplicities.
+
+% =========================================================
+\section{Sequence Diagrams}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Understand the purpose of sequence diagrams
+    \item Identify actors/objects
+    \item Understand lifelines
+    \item Understand messages
+    \item Understand message order
+    \item Understand return messages
+    \item Create a sequence diagram from a scenario
+\end{itemize}
+
+\subsection{Purpose}
+
+A sequence diagram represents interactions between objects in chronological
+order.
+
+It answers:
+
+\[
+\boxed{\text{Who communicates with whom, and in what order?}}
+\]
+
+\subsection{Basic Structure}
+
+Conceptually:
+
+\begin{verbatim}
+Customer        ATM          Bank
+   |             |             |
+   | withdraw()  |             |
+   |------------>|             |
+   |             | check()     |
+   |             |------------>|
+   |             |<------------|
+   |<------------|             |
+\end{verbatim}
+
+Time generally moves from top to bottom.
+
+\subsection{Actors and Objects}
+
+A sequence diagram can contain:
+
+\begin{itemize}
+    \item actors,
+    \item system objects,
+    \item services,
+    \item external systems.
+\end{itemize}
+
+An actor is an external participant interacting with the system.
+
+\subsection{Lifeline}
+
+A lifeline represents the existence/participation of an actor or object during
+the interaction.
+
+It is generally drawn as a vertical dashed line below the participant.
+
+\subsection{Messages}
+
+A message represents communication from one participant to another.
+
+Examples:
+
+\begin{verbatim}
+login()
+validatePayment()
+createBooking()
+sendNotification()
+\end{verbatim}
+
+The vertical order of messages represents their sequence.
+
+\subsection{Return Messages}
+
+A participant can return information to the sender.
+
+Example:
+
+\begin{verbatim}
+Customer       PaymentService
+   |                  |
+   | pay()            |
+   |----------------->|
+   |                  |
+   |<-----------------|
+   | paymentSuccess   |
+\end{verbatim}
+
+% =========================================================
+\section{Building a Sequence Diagram}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Identify participants
+    \item Identify the starting actor
+    \item Identify the first action
+    \item Follow the complete workflow
+    \item Convert actions into messages
+    \item Place messages in chronological order
+    \item Add responses/returns where relevant
+\end{itemize}
+
+\subsection{Example: Movie Booking}
+
+A simplified workflow:
+
+\[
+Customer
+\rightarrow
+BookingSystem
+\rightarrow
+Show
+\rightarrow
+Payment
+\]
+
+Possible sequence:
+
+\begin{enumerate}
+    \item Customer searches for a movie.
+    \item Booking system returns available shows.
+    \item Customer selects a show.
+    \item Booking system checks seat availability.
+    \item Customer selects a seat.
+    \item Customer makes payment.
+    \item Payment service confirms payment.
+    \item Booking system creates the booking.
+\end{enumerate}
+
+A sequence diagram represents this workflow through ordered messages.
+
+% =========================================================
+\section{Class Diagram vs Sequence Diagram}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Know what a class diagram represents
+    \item Know what a sequence diagram represents
+    \item Explain the difference in an exam
+    \item Know when each diagram is useful
+\end{itemize}
+
+\begin{tabularx}{\textwidth}{|p{0.25\textwidth}|X|X|}
+\hline
+ & \textbf{Class Diagram} & \textbf{Sequence Diagram}\\
+\hline
+Focus & Static structure & Dynamic interaction\\
+\hline
+Shows & Classes, attributes, methods, relationships & Objects/actors and messages\\
+\hline
+Main question & ``What exists?'' & ``What happens and in what order?''\\
+\hline
+Time & Not the main focus & Central to the diagram\\
+\hline
+Useful for & Designing class structure & Modeling workflows/interactions\\
+\hline
+\end{tabularx}
+
+\begin{conceptbox}
+\textbf{Memory trick:}
+
+\[
+\boxed{\text{Class Diagram = Structure}}
+\]
+
+\[
+\boxed{\text{Sequence Diagram = Interaction}}
+\]
+\end{conceptbox}
+
+% =========================================================
+\section{Common UML Design Mistakes}
+
+\subsection{Study Tracker}
+
+\begin{itemize}[label=\checkitem]
+    \item Avoid classes with unclear responsibilities
+    \item Avoid incorrect relationships
+    \item Check multiplicity
+    \item Distinguish aggregation and composition
+    \item Distinguish inheritance and association
+    \item Ensure sequence messages match the described workflow
+\end{itemize}
+
+\subsection{Wrong Relationship Type}
+
+Do not automatically use inheritance just because two classes are related.
+
+Ask:
+
+\begin{center}
+\textit{``Is this genuinely an is-a relationship?''}
+\end{center}
+
+If not, association or composition may be more appropriate.
+
+\subsection{Missing Multiplicity}
+
+A relationship without multiplicity can leave an important part of the design
+ambiguous.
+
+Always ask how many objects can participate in the relationship.
+
+\subsection{Overloaded Class}
+
+If one class contains many unrelated responsibilities, reconsider the class
+boundaries.
+
+This connects UML design with clean coding and SOLID.
+
+% =========================================================
+\section{Exam-Oriented Questions}
+
+\begin{enumerate}
+    \item What is UML?
+    \item Why is UML used in software design?
+    \item What is a class diagram?
+    \item What are the three main sections of a UML class representation?
+    \item What do +, -, and \# represent?
+    \item What is an association?
+    \item What is aggregation?
+    \item What is composition?
+    \item Differentiate aggregation and composition.
+    \item What is generalization?
+    \item What is multiplicity?
+    \item Explain 1:1, 1:N, and M:N relationships.
+    \item What is a sequence diagram?
+    \item What is a lifeline?
+    \item What is a message in a sequence diagram?
+    \item How does a sequence diagram represent time/order?
+    \item Differentiate a class diagram and a sequence diagram.
+    \item Create a class diagram for a simple system.
+    \item Create a sequence diagram for a given workflow.
+\end{enumerate}
+
+% =========================================================
+\section{Final Revision Checklist}
+
+\subsection*{UML Basics}
+
+\begin{itemize}[label=\checkitem]
+    \item I can define UML.
+    \item I know why UML is used.
+    \item I understand structural vs interaction modeling.
+\end{itemize}
+
+\subsection*{Class Diagrams}
+
+\begin{itemize}[label=\checkitem]
+    \item I can draw a basic class.
+    \item I can identify attributes.
+    \item I can identify methods.
+    \item I understand public/private/protected notation.
+    \item I understand association.
+    \item I understand aggregation.
+    \item I understand composition.
+    \item I understand inheritance/generalization.
+    \item I understand multiplicity.
+\end{itemize}
+
+\subsection*{Sequence Diagrams}
+
+\begin{itemize}[label=\checkitem]
+    \item I can identify actors and objects.
+    \item I understand lifelines.
+    \item I understand messages.
+    \item I understand return messages.
+    \item I can represent a workflow in chronological order.
+\end{itemize}
+
+\subsection*{Application}
+
+\begin{itemize}[label=\checkitem]
+    \item I can convert requirements into candidate classes.
+    \item I can identify class relationships.
+    \item I can determine multiplicity.
+    \item I can create a class diagram.
+    \item I can create a sequence diagram.
+    \item I can explain the difference between the two.
+\end{itemize}
+
+\begin{conceptbox}
+\textbf{Final mental model:}
+
+\[
+\boxed{
+\text{Requirements}
+\rightarrow
+\text{Classes + Relationships}
+\rightarrow
+\text{Class Diagram}
+}
+\]
+
+\[
+\boxed{
+\text{Scenario / Workflow}
+\rightarrow
+\text{Objects + Messages}
+\rightarrow
+\text{Sequence Diagram}
+}
+\]
+\end{conceptbox}
+
+\end{document}
