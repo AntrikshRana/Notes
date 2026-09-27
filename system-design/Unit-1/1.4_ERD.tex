@@ -1,0 +1,530 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{booktabs}
+
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+
+\title{\textbf{ERD -- Entity Relationship Diagram}\\
+\large Course Tracker \& Exam Notes}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{ERD Overview}
+
+\subsection{What is an ERD?}
+An Entity Relationship Diagram (ERD) is a visual representation of the data in a system. It shows:
+\begin{itemize}
+\item Entities
+\item Attributes
+\item Relationships between entities
+\item Cardinality and participation
+\item Keys such as primary keys
+\end{itemize}
+
+\textbf{Main purpose:} ERD helps design the database structure before implementing tables.
+
+\subsection{Why use an ERD?}
+\begin{itemize}
+\item Understand system requirements.
+\item Identify what data needs to be stored.
+\item Identify relationships between different types of data.
+\item Reduce redundancy and poor database design.
+\item Provide a blueprint for converting requirements into database tables.
+\end{itemize}
+
+\subsection{Exam Definition}
+\textbf{ERD:} A diagram that represents entities, their attributes, and the relationships between entities in a database system.
+
+\section{Entity}
+
+\subsection{What is an Entity?}
+An entity is a real-world object or concept about which the system stores information.
+
+Examples:
+\begin{itemize}
+\item Student
+\item Employee
+\item Department
+\item Course
+\item Customer
+\item Product
+\item Order
+\end{itemize}
+
+In a traditional ER diagram, an entity is represented using a \textbf{rectangle}.
+
+\subsection{Entity Set}
+An entity set is a collection of similar entities.
+
+Example:
+\[
+Student(Student\_ID, Name, Age, Email)
+\]
+
+Each individual student is an entity, while the collection of students forms the entity set.
+
+\section{Attributes}
+
+\subsection{What is an Attribute?}
+An attribute describes a property or characteristic of an entity.
+
+For example:
+\[
+Student(Student\_ID, Name, Age, Email)
+\]
+
+Here, Student\_ID, Name, Age, and Email are attributes.
+
+In a traditional ER diagram, attributes are represented using \textbf{ovals}.
+
+\section{Types of Attributes}
+
+\subsection{Simple Attribute}
+An attribute that cannot be meaningfully divided into smaller attributes.
+
+Example:
+\[
+Age
+\]
+
+\subsection{Composite Attribute}
+An attribute that can be divided into smaller components.
+
+Example:
+\[
+Name = FirstName + LastName
+\]
+
+Another example:
+\[
+Address = Street + City + State + PIN
+\]
+
+\subsection{Single-Valued Attribute}
+An attribute that has one value for each entity.
+
+Example: Student\_ID.
+
+\subsection{Multi-Valued Attribute}
+An attribute that may contain multiple values for one entity.
+
+Example: PhoneNumber, because a student may have multiple phone numbers.
+
+In a traditional ER diagram, a multi-valued attribute is represented using a \textbf{double oval}.
+
+\subsection{Derived Attribute}
+An attribute whose value can be calculated from another attribute.
+
+Example:
+\[
+Age = CurrentYear - BirthYear
+\]
+
+In a traditional ER diagram, a derived attribute is represented using a \textbf{dashed oval}.
+
+\section{Keys}
+
+\subsection{Primary Key}
+A primary key uniquely identifies each entity.
+
+Example:
+\[
+Student(Student\_ID, Name, Age)
+\]
+
+Student\_ID can be the primary key.
+
+Important properties:
+\begin{itemize}
+\item Unique
+\item Cannot be NULL
+\item Identifies an entity uniquely
+\end{itemize}
+
+In a traditional ER diagram, the key attribute is usually \textbf{underlined}.
+
+\[
+\underline{Student\_ID}
+\]
+
+\subsection{Candidate Key}
+A candidate key is an attribute or set of attributes that can uniquely identify an entity. One candidate key is selected as the primary key.
+
+\subsection{Composite Key}
+A composite key consists of more than one attribute.
+
+Example:
+\[
+Enrollment(Student\_ID, Course\_ID)
+\]
+
+The combination $(Student\_ID, Course\_ID)$ can uniquely identify an enrollment.
+
+\section{Relationships}
+
+\subsection{What is a Relationship?}
+A relationship describes an association between entities.
+
+Example:
+\[
+Student \longrightarrow Enrolls \longrightarrow Course
+\]
+
+In a traditional ER diagram, a relationship is represented using a \textbf{diamond}.
+
+\subsection{Relationship Degree}
+
+\subsubsection{Unary Relationship}
+A relationship involving one entity type.
+
+Example:
+\[
+Employee \longrightarrow Manages \longrightarrow Employee
+\]
+
+An employee manages another employee.
+
+\subsubsection{Binary Relationship}
+A relationship involving two entity types.
+
+Example:
+\[
+Student \longrightarrow Enrolls \longrightarrow Course
+\]
+
+This is the most common type.
+
+\subsubsection{Ternary Relationship}
+A relationship involving three entity types.
+
+Example: a Supplier supplies a Product to a Project, where Supplier, Product, and Project participate in one relationship.
+
+\section{Cardinality}
+
+Cardinality describes how many instances of one entity can be associated with instances of another entity.
+
+\subsection{One-to-One (1:1)}
+One entity is related to at most one entity on the other side.
+
+Example:
+\[
+Person \longleftrightarrow Passport
+\]
+
+\subsection{One-to-Many (1:N)}
+One entity can be related to many entities.
+
+Example:
+\[
+Department \longrightarrow Employee
+\]
+
+One department can have many employees.
+
+\subsection{Many-to-One (N:1)}
+Many entities are related to one entity.
+
+Example:
+\[
+Employee \longrightarrow Department
+\]
+
+Many employees can belong to one department.
+
+\subsection{Many-to-Many (M:N)}
+Many entities on one side can be related to many entities on the other side.
+
+Example:
+\[
+Student \longleftrightarrow Course
+\]
+
+A student can enroll in many courses, and a course can have many students.
+
+\section{Participation Constraints}
+
+\subsection{Total Participation}
+Every entity in the entity set must participate in the relationship.
+
+Example: every employee must belong to a department.
+
+\subsection{Partial Participation}
+Some entities may participate in the relationship, but participation is not mandatory.
+
+Example: not every employee necessarily manages another employee.
+
+\section{Weak Entity}
+
+A weak entity is an entity that cannot be uniquely identified using its own attributes alone.
+
+It depends on another entity, called the \textbf{owner} or \textbf{strong entity}.
+
+Example:
+\[
+Employee \longrightarrow Dependent
+\]
+
+A dependent may be identified using:
+\[
+Employee\_ID + DependentName
+\]
+
+\subsection{Strong vs Weak Entity}
+
+\begin{center}
+\begin{tabular}{p{0.42\textwidth} p{0.42\textwidth}}
+\toprule
+\textbf{Strong Entity} & \textbf{Weak Entity}\\
+\midrule
+Has its own identifying key & Depends on another entity for identification\\
+Can exist independently & Existence depends on an owner entity\\
+Example: Employee & Example: Dependent\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{ERD Symbols -- Quick Revision}
+
+\begin{center}
+\begin{tabular}{p{0.32\textwidth} p{0.48\textwidth}}
+\toprule
+\textbf{Component} & \textbf{Traditional Symbol}\\
+\midrule
+Entity & Rectangle\\
+Relationship & Diamond\\
+Attribute & Oval\\
+Key Attribute & Underlined attribute\\
+Multi-valued Attribute & Double oval\\
+Derived Attribute & Dashed oval\\
+Weak Entity & Double rectangle\\
+Identifying Relationship & Double diamond\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Example: Student-Course System}
+
+Suppose:
+\begin{itemize}
+\item A student has a Student ID, name, and email.
+\item A course has a Course ID and course name.
+\item A student can enroll in multiple courses.
+\item A course can contain multiple students.
+\item The enrollment has an enrollment date.
+\end{itemize}
+
+Entities:
+\[
+Student(Student\_ID, Name, Email)
+\]
+\[
+Course(Course\_ID, CourseName)
+\]
+
+Relationship:
+\[
+Student \longrightarrow Enrolls \longleftarrow Course
+\]
+
+Cardinality:
+\[
+Student \quad M:N \quad Course
+\]
+
+The relationship can have the attribute:
+\[
+EnrollmentDate
+\]
+
+This attribute belongs naturally to the enrollment relationship.
+
+\section{Converting ERD to Relational Tables}
+
+\subsection{Entity becomes a Table}
+\[
+Student(Student\_ID, Name, Email)
+\]
+
+becomes:
+\begin{verbatim}
+STUDENT
+--------------------------
+Student_ID   PRIMARY KEY
+Name
+Email
+\end{verbatim}
+
+\subsection{1:N Relationship}
+Suppose:
+\[
+Department \quad 1:N \quad Employee
+\]
+
+The primary key of the 1-side is generally placed as a foreign key in the N-side.
+
+\begin{verbatim}
+DEPARTMENT
+----------------
+Department_ID  PK
+DepartmentName
+
+EMPLOYEE
+----------------
+Employee_ID    PK
+EmployeeName
+Department_ID  FK
+\end{verbatim}
+
+\subsection{M:N Relationship}
+An M:N relationship is normally converted into a separate table.
+
+\begin{verbatim}
+STUDENT
+----------------
+Student_ID  PK
+Name
+
+COURSE
+----------------
+Course_ID   PK
+CourseName
+
+ENROLLMENT
+----------------
+Student_ID  FK
+Course_ID   FK
+EnrollmentDate
+\end{verbatim}
+
+The combination $(Student\_ID, Course\_ID)$ can be used as a composite primary key.
+
+\section{ERD vs UML Class Diagram}
+
+\begin{center}
+\begin{tabular}{p{0.42\textwidth} p{0.42\textwidth}}
+\toprule
+\textbf{ERD} & \textbf{UML Class Diagram}\\
+\midrule
+Database/data modeling & Software/object modeling\\
+Focuses on data & Focuses on objects/classes\\
+Entities and relationships & Classes, methods, relationships\\
+Attributes & Attributes and operations\\
+Used for database design & Used for software design\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\[
+ERD \rightarrow Database
+\]
+\[
+UML \rightarrow Software/System Design
+\]
+
+\section{How to Draw an ERD from Requirements}
+
+\begin{enumerate}
+\item Read the requirements carefully.
+\item Identify nouns -- they are potential entities.
+\item Identify properties -- these become attributes.
+\item Identify unique identifiers -- these become keys.
+\item Identify verbs -- they often represent relationships.
+\item Determine relationship cardinality.
+\item Determine participation constraints if required.
+\item Identify weak entities and identifying relationships.
+\item Identify relationship attributes.
+\item Review the complete ERD.
+\end{enumerate}
+
+\section{Common Exam Questions}
+
+\subsection*{What is an ERD?}
+A graphical representation of entities, their attributes, and relationships in a database system.
+
+\subsection*{What is an entity?}
+A real-world object or concept about which data is stored.
+
+\subsection*{What is an attribute?}
+A property that describes an entity.
+
+\subsection*{What is cardinality?}
+It specifies how many instances of one entity can be associated with instances of another entity.
+
+\subsection*{What is a weak entity?}
+An entity that cannot be uniquely identified by its own attributes alone and depends on an owner entity.
+
+\subsection*{What is a composite attribute?}
+An attribute that can be divided into smaller meaningful attributes.
+
+\subsection*{What is a derived attribute?}
+An attribute whose value is calculated from other stored data.
+
+\section{Exam Checklist}
+
+\begin{itemize}[label=$\square$]
+\item ERD definition and purpose
+\item Entity and entity set
+\item Attributes
+\item Simple, composite, single-valued, multi-valued, and derived attributes
+\item Primary, candidate, and composite keys
+\item Relationships
+\item Unary, binary, and ternary relationships
+\item 1:1, 1:N, N:1, and M:N cardinality
+\item Total and partial participation
+\item Strong and weak entities
+\item ERD symbols
+\item Converting ERD to relational tables
+\item ERD vs UML class diagram
+\item Drawing an ERD from requirements
+\end{itemize}
+
+\section{One-Page Memory Sheet}
+
+\begin{center}
+\textbf{\Large ERD = Entities + Attributes + Relationships}
+\end{center}
+
+\begin{verbatim}
+ENTITY
+  |
+  +-- ATTRIBUTES
+  |
+  +-- KEY
+
+ENTITY ---- RELATIONSHIP ---- ENTITY
+              |
+           CARDINALITY
+          /    |     \
+        1:1   1:N    M:N
+\end{verbatim}
+
+\textbf{Remember:}
+
+\begin{verbatim}
+Rectangle        -> Entity
+Oval             -> Attribute
+Diamond          -> Relationship
+Underlined       -> Key attribute
+Double Oval      -> Multi-valued attribute
+Dashed Oval      -> Derived attribute
+Double Rectangle -> Weak entity
+
+1:1 -> One to One
+1:N -> One to Many
+M:N -> Many to Many
+
+ERD -> Database design
+UML -> Software design
+\end{verbatim}
+
+\end{document}

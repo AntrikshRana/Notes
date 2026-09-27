@@ -1,0 +1,842 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{listings}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    columns=fullflexible
+}
+
+\title{\textbf{Machine Coding}\\
+\large Course Tracker \& Exam Notes}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% =========================================================
+\section{Machine Coding Overview}
+
+\subsection{What is Machine Coding?}
+
+Machine coding is the process of designing and implementing a working software system from a set of requirements, usually within a limited amount of time.
+
+The goal is not only to make the program work, but to write code that is:
+
+\begin{itemize}
+    \item Correct
+    \item Readable
+    \item Maintainable
+    \item Extensible
+    \item Modular
+    \item Testable
+\end{itemize}
+
+A machine coding problem typically gives you a problem statement and expects you to design classes, relationships, interfaces, and working functionality.
+
+\subsection{Exam Definition}
+
+\textbf{Machine coding:} A practical software-design exercise where requirements are converted into a working implementation while maintaining good object-oriented design and code quality.
+
+% =========================================================
+\section{Machine Coding vs Normal Coding}
+
+Normal programming questions often focus mainly on:
+
+\begin{itemize}
+    \item Algorithm
+    \item Data structures
+    \item Time complexity
+    \item Output correctness
+\end{itemize}
+
+Machine coding focuses more heavily on:
+
+\begin{itemize}
+    \item Class design
+    \item Object-oriented principles
+    \item Separation of responsibilities
+    \item Extensibility
+    \item Design patterns
+    \item Interfaces
+    \item Relationships between objects
+\end{itemize}
+
+\[
+\boxed{\text{Machine Coding = Working Code + Good Design}}
+\]
+
+% =========================================================
+\section{Typical Machine Coding Workflow}
+
+A useful workflow is:
+
+\[
+Requirements
+\rightarrow
+Identify Objects
+\rightarrow
+Define Responsibilities
+\rightarrow
+Design Classes
+\rightarrow
+Define Relationships
+\rightarrow
+Implement
+\rightarrow
+Test
+\]
+
+\subsection{Step 1: Understand Requirements}
+
+Read the problem carefully.
+
+Extract:
+
+\begin{itemize}
+    \item What the system should do
+    \item What entities exist
+    \item What operations are required
+    \item What constraints exist
+    \item What can change in the future
+\end{itemize}
+
+Do not start writing code immediately.
+
+\subsection{Step 2: Identify Objects}
+
+Look for important nouns in the requirements.
+
+For example, in a parking lot:
+
+\begin{verbatim}
+ParkingLot
+Vehicle
+ParkingSpot
+Ticket
+Payment
+\end{verbatim}
+
+These are possible classes.
+
+\subsection{Step 3: Identify Responsibilities}
+
+For every class ask:
+
+\begin{quote}
+What should this class be responsible for?
+\end{quote}
+
+Example:
+
+\begin{verbatim}
+Vehicle
+    -> stores vehicle information
+
+ParkingSpot
+    -> stores spot information
+    -> knows whether it is occupied
+
+ParkingLot
+    -> manages parking spots
+    -> assigns spots
+\end{verbatim}
+
+\subsection{Step 4: Define Relationships}
+
+Determine how objects interact.
+
+Examples:
+
+\begin{verbatim}
+ParkingLot HAS ParkingSpot
+ParkingSpot OCCUPIED BY Vehicle
+ParkingLot CREATES Ticket
+\end{verbatim}
+
+\subsection{Step 5: Define Interfaces}
+
+If multiple classes can perform the same type of operation, consider an interface or abstract class.
+
+Example:
+
+\begin{verbatim}
+Payment
+    |
+    +-- CashPayment
+    +-- CardPayment
+    +-- UPIPayment
+\end{verbatim}
+
+\subsection{Step 6: Implement}
+
+Implement the classes and their interactions.
+
+\subsection{Step 7: Test}
+
+Test:
+
+\begin{itemize}
+    \item Normal cases
+    \item Edge cases
+    \item Invalid inputs
+    \item Multiple objects
+    \item State changes
+\end{itemize}
+
+% =========================================================
+\section{Object-Oriented Thinking in Machine Coding}
+
+Machine coding strongly depends on object-oriented design.
+
+\subsection{Encapsulation}
+
+Keep data and the operations that manipulate it together.
+
+Example:
+
+\begin{lstlisting}[language=C++]
+class BankAccount {
+private:
+    double balance;
+
+public:
+    void deposit(double amount) {
+        if (amount > 0)
+            balance += amount;
+    }
+
+    double getBalance() {
+        return balance;
+    }
+};
+\end{lstlisting}
+
+The balance cannot be modified directly from outside the class.
+
+\subsection{Abstraction}
+
+Expose what an object does rather than how it does it.
+
+Example:
+
+\begin{lstlisting}[language=C++]
+class Payment {
+public:
+    virtual void pay(double amount) = 0;
+};
+\end{lstlisting}
+
+The caller only needs to know that payment can be performed.
+
+\subsection{Polymorphism}
+
+Different classes can implement the same interface differently.
+
+\begin{lstlisting}[language=C++]
+class CardPayment : public Payment {
+public:
+    void pay(double amount) override {
+        cout << "Card payment";
+    }
+};
+
+class UPIPayment : public Payment {
+public:
+    void pay(double amount) override {
+        cout << "UPI payment";
+    }
+};
+\end{lstlisting}
+
+% =========================================================
+\section{Class Responsibility}
+
+One of the most important machine coding skills is deciding what belongs inside each class.
+
+A class should have a clear responsibility.
+
+Bad design:
+
+\begin{verbatim}
+ParkingLot
+    -> stores parking data
+    -> calculates payment
+    -> sends notifications
+    -> processes user authentication
+    -> generates reports
+\end{verbatim}
+
+This creates a large class with many responsibilities.
+
+Better:
+
+\begin{verbatim}
+ParkingLot
+PaymentService
+NotificationService
+AuthenticationService
+ReportService
+\end{verbatim}
+
+Each component has a clearer responsibility.
+
+This connects directly to the \textbf{Single Responsibility Principle (SRP)}.
+
+% =========================================================
+\section{Composition vs Inheritance}
+
+Machine coding often requires deciding between inheritance and composition.
+
+\subsection{Inheritance}
+
+Use inheritance when there is a genuine:
+
+\[
+\boxed{\text{IS-A}}
+\]
+
+relationship.
+
+Example:
+
+\begin{verbatim}
+Vehicle
+   |
+   +-- Car
+   +-- Bike
+\end{verbatim}
+
+A Car is a Vehicle.
+
+\subsection{Composition}
+
+Use composition when there is a:
+
+\[
+\boxed{\text{HAS-A}}
+\]
+
+relationship.
+
+Example:
+
+\begin{verbatim}
+Car
+ |
+ +-- Engine
+\end{verbatim}
+
+A Car has an Engine.
+
+\subsection{Rule of Thumb}
+
+\[
+IS-A \rightarrow Inheritance
+\]
+
+\[
+HAS-A \rightarrow Composition
+\]
+
+Composition is often preferred when behavior needs to change independently.
+
+% =========================================================
+\section{Interfaces and Abstract Classes}
+
+When multiple implementations should follow the same contract, use an interface-like abstract class.
+
+Example:
+
+\begin{lstlisting}[language=C++]
+class Notification {
+public:
+    virtual void send(string message) = 0;
+    virtual ~Notification() {}
+};
+\end{lstlisting}
+
+Implementations:
+
+\begin{lstlisting}[language=C++]
+class EmailNotification : public Notification {
+public:
+    void send(string message) override {
+        cout << "Email: " << message;
+    }
+};
+
+class SMSNotification : public Notification {
+public:
+    void send(string message) override {
+        cout << "SMS: " << message;
+    }
+};
+\end{lstlisting}
+
+Now another class can depend on the abstraction rather than a concrete implementation.
+
+% =========================================================
+\section{SOLID in Machine Coding}
+
+SOLID principles help keep machine coding solutions maintainable.
+
+\subsection{S -- Single Responsibility Principle}
+
+A class should have one primary responsibility.
+
+\[
+\boxed{\text{One class should not handle unrelated responsibilities}}
+\]
+
+Example:
+
+Do not make one class responsible for:
+
+\begin{verbatim}
+Payment + Notification + Logging + Authentication
+\end{verbatim}
+
+Separate them where appropriate.
+
+\subsection{O -- Open/Closed Principle}
+
+Software should be open for extension but closed for unnecessary modification.
+
+Example:
+
+If you support:
+
+\begin{verbatim}
+CardPayment
+UPIPayment
+\end{verbatim}
+
+adding:
+
+\begin{verbatim}
+CashPayment
+\end{verbatim}
+
+should ideally not require changing the core checkout logic.
+
+\subsection{L -- Liskov Substitution Principle}
+
+A subclass should be usable wherever its base class is expected without breaking the expected behavior.
+
+\subsection{I -- Interface Segregation Principle}
+
+Prefer small, focused interfaces instead of one large interface containing unrelated methods.
+
+\subsection{D -- Dependency Inversion Principle}
+
+High-level classes should depend on abstractions rather than concrete implementations.
+
+\[
+HighLevel \rightarrow Interface \leftarrow LowLevel
+\]
+
+% =========================================================
+\section{Design Patterns in Machine Coding}
+
+Design patterns can provide reusable structures for common design problems.
+
+Common examples:
+
+\begin{center}
+\begin{tabular}{p{0.25\textwidth} p{0.60\textwidth}}
+\toprule
+\textbf{Pattern} & \textbf{Typical Use}\\
+\midrule
+Factory & Creating different implementations\\
+Strategy & Switching algorithms/behaviors\\
+Observer & Notifying multiple objects\\
+Builder & Constructing complex objects\\
+Singleton & Ensuring a single shared instance\\
+Adapter & Connecting incompatible interfaces\\
+Decorator & Adding behavior dynamically\\
+Command & Encapsulating actions\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Do not force a design pattern into a problem just because you know it. Use a pattern when it solves an actual design problem.
+
+% =========================================================
+\section{Example: Parking Lot}
+
+Parking Lot is a common machine coding problem.
+
+\subsection{Possible Classes}
+
+\begin{verbatim}
+ParkingLot
+ParkingFloor
+ParkingSpot
+Vehicle
+Ticket
+Payment
+\end{verbatim}
+
+Possible vehicle hierarchy:
+
+\begin{verbatim}
+Vehicle
+   |
+   +-- Car
+   +-- Bike
+   +-- Truck
+\end{verbatim}
+
+Possible relationships:
+
+\begin{verbatim}
+ParkingLot
+    |
+    +-- ParkingFloor
+            |
+            +-- ParkingSpot
+
+ParkingSpot
+    |
+    +-- Vehicle
+\end{verbatim}
+
+\subsection{Important Design Questions}
+
+Before coding, decide:
+
+\begin{itemize}
+\item What types of vehicles are supported?
+\item What types of parking spots exist?
+\item How is a spot selected?
+\item How is a ticket generated?
+\item How is parking duration calculated?
+\item How is payment calculated?
+\item What happens when the parking lot is full?
+\end{itemize}
+
+The goal is to turn these requirements into clear responsibilities.
+
+% =========================================================
+\section{Example: Tic Tac Toe}
+
+Possible classes:
+
+\begin{verbatim}
+Game
+Board
+Player
+Symbol
+\end{verbatim}
+
+Responsibilities:
+
+\begin{verbatim}
+Board
+    -> stores cells
+    -> places symbols
+
+Player
+    -> stores player information
+    -> chooses a move
+
+Game
+    -> controls game flow
+    -> checks game state
+\end{verbatim}
+
+Avoid putting everything inside one \texttt{Game} class.
+
+% =========================================================
+\section{Example: LRU Cache}
+
+An LRU cache needs to support operations such as:
+
+\begin{verbatim}
+get(key)
+put(key, value)
+\end{verbatim}
+
+with efficient access and removal of the least recently used item.
+
+A common implementation uses:
+
+\begin{itemize}
+\item Hash map for fast lookup
+\item Doubly linked list for tracking usage order
+\end{itemize}
+
+Conceptually:
+
+\[
+HashMap + DoublyLinkedList
+\]
+
+The machine coding focus is not only the data structure but also how the responsibilities are organized into classes.
+
+% =========================================================
+\section{Extensibility}
+
+A good machine coding solution should make reasonable future changes easy.
+
+Suppose a payment system supports:
+
+\begin{verbatim}
+UPI
+Card
+\end{verbatim}
+
+Later the system needs:
+
+\begin{verbatim}
+Cash
+Wallet
+NetBanking
+\end{verbatim}
+
+A design based on an abstraction:
+
+\begin{verbatim}
+PaymentStrategy
+    |
+    +-- UPIPayment
+    +-- CardPayment
+    +-- CashPayment
+    +-- WalletPayment
+\end{verbatim}
+
+can be extended without rewriting the whole system.
+
+% =========================================================
+\section{Dependency Injection}
+
+Dependency Injection means providing an object with the dependencies it needs rather than making the object create them internally.
+
+Without dependency injection:
+
+\begin{lstlisting}[language=C++]
+class Checkout {
+private:
+    CardPayment payment;
+};
+\end{lstlisting}
+
+Now Checkout is tightly coupled to CardPayment.
+
+With dependency injection:
+
+\begin{lstlisting}[language=C++]
+class Checkout {
+private:
+    Payment* payment;
+
+public:
+    Checkout(Payment* p) : payment(p) {}
+};
+\end{lstlisting}
+
+Now:
+
+\begin{verbatim}
+Checkout
+   |
+   v
+Payment interface
+   ^
+   |
+CardPayment / UPIPayment
+\end{verbatim}
+
+This improves flexibility and testability.
+
+% =========================================================
+\section{Testing Machine Coding Solutions}
+
+After implementation, test the behavior.
+
+\subsection{Functional Tests}
+
+Check normal operations.
+
+Example:
+
+\begin{verbatim}
+create vehicle
+park vehicle
+generate ticket
+exit vehicle
+calculate payment
+\end{verbatim}
+
+\subsection{Edge Cases}
+
+Examples:
+
+\begin{itemize}
+\item Parking lot is full.
+\item Invalid vehicle type.
+\item Duplicate ID.
+\item Empty input.
+\item Object does not exist.
+\item Invalid state transition.
+\end{itemize}
+
+\subsection{State Testing}
+
+For state-based systems, check transitions.
+
+Example:
+
+\[
+Idle \rightarrow Running \rightarrow Completed
+\]
+
+Verify that invalid transitions are rejected when required.
+
+% =========================================================
+\section{Common Mistakes}
+
+\begin{enumerate}
+\item Starting to code before understanding requirements.
+\item Creating one giant class.
+\item Using inheritance everywhere.
+\item Making every variable public.
+\item Hard-coding behavior that should be extensible.
+\item Mixing unrelated responsibilities.
+\item Overusing design patterns.
+\item Ignoring invalid inputs and edge cases.
+\item Not testing interactions between classes.
+\item Writing code that works only for the initial example.
+\end{enumerate}
+
+% =========================================================
+\section{Machine Coding Checklist}
+
+Before coding:
+
+\begin{itemize}[label=$\square$]
+\item Understand all requirements
+\item Identify entities/objects
+\item Identify responsibilities
+\item Identify relationships
+\item Decide inheritance vs composition
+\item Identify possible abstractions
+\item Identify behavior that may change
+\item Choose patterns only if useful
+\end{itemize}
+
+While coding:
+
+\begin{itemize}[label=$\square$]
+\item Keep classes focused
+\item Encapsulate data
+\item Program to abstractions
+\item Avoid unnecessary coupling
+\item Use meaningful names
+\item Keep methods focused
+\item Handle invalid states
+\end{itemize}
+
+After coding:
+
+\begin{itemize}[label=$\square$]
+\item Test normal cases
+\item Test edge cases
+\item Test invalid inputs
+\item Check extensibility
+\item Review SOLID principles
+\item Remove unnecessary complexity
+\end{itemize}
+
+% =========================================================
+\section{Exam-Oriented Questions}
+
+\subsection*{What is machine coding?}
+A practical software-design exercise where requirements are converted into a working implementation while maintaining good object-oriented design.
+
+\subsection*{Why is OOP important in machine coding?}
+OOP allows the system to be divided into objects with clear responsibilities, making the design easier to understand, maintain, test, and extend.
+
+\subsection*{When should inheritance be used?}
+When there is a genuine ``IS-A'' relationship and the subclass follows the abstraction represented by the base class.
+
+\subsection*{When should composition be used?}
+When one object contains or uses another object, representing a ``HAS-A'' relationship.
+
+\subsection*{Why are interfaces useful?}
+They define contracts and allow multiple implementations while reducing coupling to concrete classes.
+
+\subsection*{Why are SOLID principles important?}
+They help create maintainable, flexible, testable, and extensible designs.
+
+% =========================================================
+\section{One-Page Memory Sheet}
+
+\begin{center}
+\textbf{\Large MACHINE CODING = REQUIREMENTS + DESIGN + IMPLEMENTATION}
+\end{center}
+
+\begin{verbatim}
+1. Understand Requirements
+          |
+          v
+2. Identify Objects
+          |
+          v
+3. Assign Responsibilities
+          |
+          v
+4. Define Relationships
+          |
+          v
+5. Choose Abstractions
+          |
+          v
+6. Implement
+          |
+          v
+7. Test
+\end{verbatim}
+
+\textbf{Core rules:}
+
+\begin{verbatim}
+IS-A       -> Inheritance
+HAS-A      -> Composition
+
+One responsibility       -> SRP
+Extend without rewriting -> OCP
+Subtypes remain valid    -> LSP
+Small interfaces         -> ISP
+Depend on abstractions   -> DIP
+
+Factory    -> Object creation
+Strategy   -> Interchangeable behavior
+Observer   -> Notifications
+Builder    -> Complex construction
+Adapter    -> Compatible interfaces
+Decorator  -> Added behavior
+Command    -> Encapsulated action
+\end{verbatim}
+
+\end{document}
